@@ -27,7 +27,7 @@ const StudentHome = () => {
       <nav className="navbar">
                       <ul className="nav-list">
                         <li >
-                          <Link className="nav-link active" aria-current="page" to="/studentHome">Home</Link>
+                          <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
                         <li >
                           <Link className="nav-link" to="/about">About Us</Link>

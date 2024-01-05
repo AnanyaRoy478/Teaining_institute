@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 // import Navbar from '../HomePage/Navbar';
 import axios from "axios"
 import Navbar from '../HomePage/Navbar';
+import API from '../Services/API';
 
 const StudentLogin = () => {
     const [email,setEmail] = useState()
@@ -11,36 +12,35 @@ const StudentLogin = () => {
     const navigate =useNavigate()
     var role = localStorage.getItem('role');
 
-    const HandleSubmit =(e)=>{
-        e.preventDefault()
-        
-        axios.post('http://localhost:8000/login',{email,password})
-        .then(res=>{
-            localStorage.setItem('role',res.data.role)
-            localStorage.setItem('token',res.data.token)
-            
+    const HandleSubmit = (e) => {
+      e.preventDefault();
     
-            if(res.data.token===undefined){
-                setSubmissionStatus('error');
-                return;
+      API.post('/login', { email, password })
+        .then((res) => {
+          if (res.data.token === undefined) {
+            setSubmissionStatus('error');
+            window.alert('Try again later');
+          } else {
+            localStorage.setItem('role', res.data.role);
+            localStorage.setItem('token', res.data.token);
+    
+            if (res.data.role === 'admin') {
+              setSubmissionStatus('success');
+              window.alert('Logged in successfully!');
+              navigate('/adminHome');
+            } else {
+              setSubmissionStatus('success');
+              window.alert('Logged in successfully!');
+              window.location.href = '/';
             }
-            else {
-                setSubmissionStatus('success');
-                if(submissionStatus==='success'){
-                  window.alert('Logged in successfully!');
-                }
-                else{
-                    if (res.data.role === 'admin'){
-                        navigate('/adminHome')
-                    }                        
-                    else {
-                        navigate('/studentHome');
-                }
-                    }
-            }
-            // console.log(res.data)
+          }
         })
-    }
+        .catch((error) => {
+          console.error('Error during login:', error);
+          setSubmissionStatus('error');
+          window.alert('An error occurred. Please try again later.');
+        });
+    };    
 
   return (
     <>

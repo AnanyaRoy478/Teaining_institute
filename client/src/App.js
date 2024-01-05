@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import CommonHome from './HomePage/CommonHome.jsx';
 import About from './Components/About.jsx';
 import Courses from './Components/Courses.jsx';
@@ -21,8 +21,8 @@ const App = () => {
   return (
     <>
     <BrowserRouter>
-      <Routes>
-      <Route path= "/" element={(!token)&&<CommonHome/>} />
+      <Routes> 
+      <Route path="/" element={(!token) ? <CommonHome /> : <StudentHome />} />
         <Route path="/about" element={<About/>}/>
         <Route path="/courses" element={<Courses/>}/>
         <Route path="/contact" element={<Contact/>}/>
@@ -30,7 +30,7 @@ const App = () => {
         <Route path="/studentlogin" element={<StudentLogin/>}/>
         <Route path="/adminHome" element={<AdminHome/>}/>
         <Route path="/studentData" element={<StudentTable />}/>
-        <Route path="/studentHome" element={<StudentHome/>}/>
+        {/* <Route path="/studentHome" element={<StudentHome/>}/> */}
         <Route path="/addCourse" element={<AddCourse />}/>
         <Route path="/course/:id" element={<Edit />}/>
         <Route path="/editOrDelete" element={<EditDelete />}/>
